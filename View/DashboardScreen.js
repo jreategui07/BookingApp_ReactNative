@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import BookingViewModel from '../ViewModel/BookingViewModel';
 
 const DashboardScreen = ({ navigation }) => {
   const [studentID, setStudentID] = useState('');
   const [studentName, setStudentName] = useState('');
   const [numberOfPeople, setNumberOfPeople] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
+  const [availableRooms, setAvailableRooms] = useState([]);
+  const bookingViewModel = new BookingViewModel();
+
+  useEffect(() => {
+    const rooms = bookingViewModel.getAvailableRooms();
+    setAvailableRooms(rooms.map(room => room.roomNumber));
+  }, []);
 
   const navigateToBookingScreen = () => {
     if (studentID && studentName && numberOfPeople && roomNumber) {
       navigation.navigate('Booking', {
         studentID,
         studentName,
-        numberOfPeople: parseInt(numberOfPeople),
+        numberOfPeople: parseInt(numberOfPeople, 10),
         roomNumber,
       });
     } else {
-      alert('Please fill in all the fields.');
+      Alert.alert('Error', 'Please fill in all the fields.');
     }
   };
 
@@ -42,12 +51,18 @@ const DashboardScreen = ({ navigation }) => {
         onChangeText={setNumberOfPeople}
         keyboardType='numeric'
       />
-      <TextInput
-        style={styles.input}
-        placeholder='Room Number (e.g., A101)'
-        value={roomNumber}
-        onChangeText={setRoomNumber}
-      />
+      <Text style={styles.label}>Select Room Number:</Text>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={roomNumber}
+          onValueChange={(itemValue) => setRoomNumber(itemValue)}
+        >
+          <Picker.Item label='Select a room' value='' />
+          {availableRooms.map((room, index) => (
+            <Picker.Item key={index} label={room} value={room} />
+          ))}
+        </Picker>
+      </View>
       <Button title='Check Availability' onPress={navigateToBookingScreen} />
     </View>
   );
@@ -71,6 +86,17 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 20,
   },
 });
 

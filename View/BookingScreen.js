@@ -16,12 +16,6 @@ const BookingScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleCancel = () => {
-    if (navigation.canGoBack()){
-      navigation.goBack()
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Check Room Availability</Text>
@@ -30,7 +24,6 @@ const BookingScreen = ({ route, navigation }) => {
       <Text>Number of People: {numberOfPeople}</Text>
       <Text>Room Number: {roomNumber}</Text>
       <Button title='Confirm Booking' onPress={handleCheckAvailability} />
-      <Button title="Cancel" onPress={handleCancel} />
     </View>
   );
 };
