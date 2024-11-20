@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import BookingViewModel from '../ViewModel/BookingViewModel';
 
@@ -34,22 +34,22 @@ const DashboardScreen = ({ navigation }) => {
       <Text style={styles.title}>Book a Study Room</Text>
       <TextInput
         style={styles.input}
-        placeholder='Student ID'
+        placeholder="Student ID"
         value={studentID}
         onChangeText={setStudentID}
       />
       <TextInput
         style={styles.input}
-        placeholder='Student Name'
+        placeholder="Student Name"
         value={studentName}
         onChangeText={setStudentName}
       />
       <TextInput
         style={styles.input}
-        placeholder='Number of People'
+        placeholder="Number of People"
         value={numberOfPeople}
         onChangeText={setNumberOfPeople}
-        keyboardType='numeric'
+        keyboardType="numeric"
       />
       <Text style={styles.label}>Select Room Number:</Text>
       <View style={styles.pickerContainer}>
@@ -57,13 +57,15 @@ const DashboardScreen = ({ navigation }) => {
           selectedValue={roomNumber}
           onValueChange={(itemValue) => setRoomNumber(itemValue)}
         >
-          <Picker.Item label='Select a room' value='' />
+          <Picker.Item label="Select a room" value="" />
           {availableRooms.map((room, index) => (
             <Picker.Item key={index} label={room} value={room} />
           ))}
         </Picker>
       </View>
-      <Button title='Check Availability' onPress={navigateToBookingScreen} />
+      <TouchableOpacity style={styles.button} onPress={navigateToBookingScreen}>
+        <Text style={styles.buttonText}>Check Availability</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -73,31 +75,68 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#f7f7f7',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
+    color: '#333',
   },
   input: {
-    height: 40,
+    height: 50,
     borderWidth: 1,
-    borderColor: '#ccc',
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderColor: '#ddd',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    color: '#333',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   label: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#555',
     marginBottom: 10,
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    backgroundColor: '#fff',
     marginBottom: 20,
+    paddingHorizontal: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
+
 
 export default DashboardScreen;

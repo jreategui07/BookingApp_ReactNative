@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import BookingViewModel from '../ViewModel/BookingViewModel';
 
 const BookingScreen = ({ route, navigation }) => {
@@ -10,20 +10,35 @@ const BookingScreen = ({ route, navigation }) => {
     const isAvailable = bookingVM.checkRoomAvailability(roomNumber, numberOfPeople);
     if (isAvailable) {
       bookingVM.createBooking(studentID, studentName, roomNumber, numberOfPeople);
-      alert(`Room ${roomNumber} is booked successfully!`);
+      Alert.alert('Success', `Room ${roomNumber} is booked successfully!`);
+      navigation.goBack();
     } else {
-      alert(`Room ${roomNumber} is not available or cannot accommodate ${numberOfPeople} people.`);
+      Alert.alert('Error', `Room ${roomNumber} is not available or cannot accommodate ${numberOfPeople} people.`);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Check Room Availability</Text>
-      <Text>Student ID: {studentID}</Text>
-      <Text>Student Name: {studentName}</Text>
-      <Text>Number of People: {numberOfPeople}</Text>
-      <Text>Room Number: {roomNumber}</Text>
-      <Button title='Confirm Booking' onPress={handleCheckAvailability} />
+      <Text style={styles.title}>Room Booking Details</Text>
+      <View style={styles.detailContainer}>
+        <Text style={styles.label}>Student ID:</Text>
+        <Text style={styles.value}>{studentID}</Text>
+      </View>
+      <View style={styles.detailContainer}>
+        <Text style={styles.label}>Student Name:</Text>
+        <Text style={styles.value}>{studentName}</Text>
+      </View>
+      <View style={styles.detailContainer}>
+        <Text style={styles.label}>Number of People:</Text>
+        <Text style={styles.value}>{numberOfPeople}</Text>
+      </View>
+      <View style={styles.detailContainer}>
+        <Text style={styles.label}>Room Number:</Text>
+        <Text style={styles.value}>{roomNumber}</Text>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleCheckAvailability}>
+        <Text style={styles.buttonText}>Confirm Booking</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -33,12 +48,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#f7f7f7',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
+    color: '#333',
+  },
+  detailContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#555',
+  },
+  value: {
+    fontSize: 18,
+    fontWeight: '400',
+    color: '#333',
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

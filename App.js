@@ -11,23 +11,23 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  const headerOptions = ({navigation}) => ({
-    headerStyle: { backgroundColor: 'tomato' } ,
-    headerTintColor: 'black',
+  const headerOptions = ({ navigation }) => ({
+    headerStyle: { backgroundColor: '#007BFF' },
+    headerTintColor: 'white',
     headerTitleAlign: 'center',
-    headerTitleStyle: { fontWeight: 'bold'},
+    headerTitleStyle: { fontWeight: 'bold', fontSize: 18 },
     headerRight: () => (
-      <Button title='Logout' onPress={ () => {
+      <Button title='Logout' color='#FF6347' onPress={() => {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{name: "Dashboard"}]
+            routes: [{ name: 'Dashboard' }]
           })
         )
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{name: "Login"}]
+            routes: [{ name: 'Login' }]
           })
         )
       }} />
@@ -36,8 +36,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Group screenOptions={headerOptions} >
           <Stack.Screen name='Dashboard' component={DashboardScreen} options={{ headerShown: true }} />
           <Stack.Screen name='Booking' component={BookingScreen} options={{ headerShown: true }} />
