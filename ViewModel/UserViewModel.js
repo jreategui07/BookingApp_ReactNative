@@ -1,4 +1,4 @@
-import { users } from "../Model/Data/Mock/users";
+import { users } from '../Model/Data/Mock/users';
 
 class UserViewModel {
   constructor() {
@@ -6,7 +6,11 @@ class UserViewModel {
   }
 
   login(username, password) {
-    const user = users.find(u => u.username === username && u.password === password);
+    const user = users.find(
+      u =>
+        u.username.toLowerCase() === username.toLowerCase() &&
+        u.password.toLowerCase() === password.toLowerCase()
+    );
     if (user) {
       this.currentUser = { ...user, isLoggedIn: true };
       console.log("Login successful!");

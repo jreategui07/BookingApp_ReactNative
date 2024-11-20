@@ -1,5 +1,5 @@
-import { rooms } from "../Model/Data/rooms";
-import { bookings } from "../Model/Data/bookings";
+import { rooms } from '../Model/Data/Mock/rooms';
+import { bookings } from '../Model/Data/Mock/bookings';
 
 class BookingViewModel {
   constructor() {
